@@ -1,0 +1,39 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../paper-input/paper-input.html">
+
+<dom-module id="search-bar">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <paper-input label="Search" value="{{search}}"></paper-input>
+  </template>
+
+  <script>
+    class SearchBar extends Polymer.Element {
+      static get is() { return 'search-bar'; }
+      static get properties() {
+        return {
+          search: {
+            type: String,
+            value: '',
+            observer: '_changeValue'
+          }
+        };
+      }
+
+      _changeValue(){
+        const customEvent = new CustomEvent('search-init', {
+          bubbles: false,
+          detail: this.search
+        })
+        this.dispatchEvent(customEvent)
+      }
+
+    }
+
+    window.customElements.define(SearchBar.is, SearchBar);
+  </script>
+</dom-module>
